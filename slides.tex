@@ -1,0 +1,69 @@
+\documentclass{beamer}
+
+\year=2023
+\month=7
+\day=11
+
+\usetheme{simple}
+\setbeamertemplate{items}[circle]
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamerfont{footnote}{size=\scriptsize}
+\def\bibfont{\tiny}
+\usepackage{lmodern}
+\usepackage[scale=2]{ccicons}
+
+\title{Detección de noticias falsas usando Procesado de Lenguaje Natural}
+% \subtitle{Trabajo de Fin de Grado}
+\date{\today}
+\author{Miguel Ricardo Claramunt Argote}
+\institute{Escola Tècnica Superior d'Enginyeria -- Universitat de València}
+
+\begin{document}
+
+\setwatermark[hoffset=0.02\textwidth,voffset=0.02\textwidth]{\includesvg[width=0.7\textwidth]{img/ETSE_2_linies.svg}}
+% Title page frame
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\setwatermark[voffset=0.03\textwidth]{\includesvg[height=0.06\textwidth]{img/ETSE_icono.svg}}
+
+% Outline frame
+\begin{frame}{Esquema de la presentación}
+    \tableofcontents
+\end{frame}
+
+\section{Introducción}
+\include{tex/1-intro}
+
+\section{Definiciones}
+\include{tex/2-defs}
+
+\section{Estado del arte}
+\include{tex/3-sota}
+
+\section{Análisis del problema}
+\include{tex/4-analisis}
+
+% \section{Metodología aplicada}
+% \include{tex/5-metodologia}
+
+\section{Resultados obtenidos y evaluación}
+\include{tex/6-resultados}
+
+\section{Discusión}
+\include{tex/7-discusion}
+
+\section{Conclusiones}
+\include{tex/8-conclusiones}
+
+% \section{Trabajos futuros}
+% \include{tex/9-trabajo_futuro}
+
+\section*{Bibliografía}
+\begin{frame}[noframenumbering,plain,allowframebreaks]{Referencias}
+        \printbibliography
+\end{frame}
+
+\end{document}
+

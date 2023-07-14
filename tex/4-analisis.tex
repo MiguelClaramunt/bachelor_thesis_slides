@@ -1,0 +1,127 @@
+\begin{frame}{4.1. \textit{Claim} y evidencia}
+\begin{itemize}
+    \item \textit{Claim}: equivalente al titular de una noticia, pieza de información a verificar.
+    \item Evidencia: hecho, dato o información que apoya o refuta la \textit{claim}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{4.2. Dataset: Politifact\footnote{\citep{Popat2017}} y Snopes\footnote{\citep{Vlachos2014}}}
+
+Un \textit{claim} y varias evidencias por noticia. 
+
+\vspace{0.5ex}
+
+Creación de dos datasets, {P-S}\textsubscript{One} y {P-S}\textsubscript{All}:
+\begin{itemize}
+    \item {P-S}\textsubscript{One}: una \textit{claim}, una evidencia elegida aleatoriamente.
+    \item {P-S}\textsubscript{All}: una \textit{claim}, todas las evidencias.
+\end{itemize}
+
+% \vspace{1ex}
+
+% {P-S}\textsubscript{One} y {P-S}\textsubscript{All}; el primero tendrá, para cada \textit{claim}, una evidencia elegida aleatoriamente; el segundo las tendrá todas.
+
+% \vspace{1ex}
+
+% Existe un pequeño desbalanceo (3:2); no aplicamos ninguna técnica de \textit{Data Augmentation} debido a que no es tan exagerado.
+
+\vspace{2ex}
+
+% \begin{frame}
+\begin{table}
+    \hfill
+    \begin{tabular}{ccrr}
+        \hline
+        \textbf{Dataset} & \textbf{Etiqueta} & \textbf{\#} & \textbf{\#} \\\hline
+        \multirow{2}{*}{PolitiFact} & True & 186 & \multirow{2}{*}{356} \\
+         & False & 170 &  \\ \hline
+        \multirow{2}{*}{Snopes} & True & 116 & \multirow{2}{*}{433} \\
+         & False & 317 & \\\hline
+    \end{tabular}
+    % \caption{Conteo de muestras.}
+    % \label{tab:sp-new}
+    \hfill
+    \begin{tabular}{cr}
+        \hline
+        \textbf{Estadístico} & \multicolumn{1}{c}{\textbf{Valor}} \\ \hline
+        $\mu$ & 7,43 \\
+        $\sigma$ & 6,34 \\
+        Mín. & 1 \\
+        \text{Q}\textsubscript{1} & 2 \\
+        \text{Q}\textsubscript{2} & 5 \\
+        \text{Q}\textsubscript{3} & 11 \\
+        Máx. & 27 \\\hline
+    \end{tabular}
+    % \label{tab:sp-stats}
+    \hfill\null
+    \caption{Conteo de muestras y estadísticos de longitud de noticias.}
+\end{table}
+% \end{frame}
+
+\end{frame}
+
+\begin{frame}{4.3. Dataset: News\footnote{\citep{Ahmed2017}}}
+% \textbf{News .} Contiene artículos periodísticos de diferentes temática. Las noticias fueron limpiadas y procesadas, aunque para las falsas no se corrigieron los errores tipográficos.
+
+% \vspace{2ex}
+\begin{itemize}
+    \item Artículos periodísticos completos de diversas fuentes.
+    \item Limpieza adicional para las noticias verdaderas: autor, aclaraciones.
+\end{itemize}
+% Artículos periodísticos completos de diversas fuentes. Limpieza adicional para las noticias verdaderas.
+
+% Adicionalmente, eliminamos fragmentos de texto al principio de las noticias verdaderas relacionadas con la ubicación o aclaraciones para evitar que el modelo aprenda estas estructuras y las utilice en la clasificación.
+
+\vspace{2ex}
+
+\begin{table}
+    \centering
+    \begin{tabular}{cr}
+        \hline
+        \textbf{Etiqueta} & \textbf{\#} \\ \hline
+        {True} & {21417} \\ \hline
+        {False} & {23481} \\
+        \hline
+    \end{tabular}
+    \caption{Conteo de muestras.}
+    % \label{fig:news-dataset}
+\end{table}
+
+\end{frame}
+
+% \begin{frame}{Normalización y limpieza; creación de conjuntos \textit{train}, \textit{evaluation}, \textit{test}}
+
+% \textbf{Normalización y limpieza.} Para trabajar con los modelos estadísticos, aplicamos un paso adicional de normalización y limpieza del texto: sustituimos acrónimos, convertimos a minúsculas, expandimos contracciones, eliminamos cadenas indeseadas (enlaces \textit{web}, \textit{tags} HTML, cárácteres mal codificados, etc.), eliminamos \textit{stop words}, tokenizamos cada palabra y lematizamos.
+
+% \vspace{2ex}
+
+% \textbf{Conjuntos \textit{train}, \textit{evaluation}, \textit{test}.} Para los modelos estadísticos hacemos una división 4:1 para entrenamiento y test respectivamente. En el caso de los modelos basados en \textit{transformers}, creamos tres conjuntos con ratios 8:1:1.
+
+% \end{frame}
+
+\begin{frame}{4.4. Modelos y clasificadores utilizados}
+
+Modelos estadísticos (\texttt{scikit-learn}):
+\begin{itemize}
+    \item \textit{Bag of Words} y TF-IDF: 
+    \begin{itemize}
+        \item Regresión logística (LR)
+        \item Naïve Bayes (NB)
+        \item Support Vector Machine (SVM)
+        \item Stochastic Gradient Descent (SGD)
+        \item Random Forest (RF)
+        
+    \end{itemize}
+\end{itemize}
+
+\vspace{2ex}
+
+Modelos\footnote{\citep{Devlin2018,Sanh2019,Liu2019,He2020}} basados en \textit{transformers} (\texttt{transformers} + \texttt{pytorch}):
+\begin{itemize}
+    \item BERT%: arquitectura bi-direccional; dos tareas: MLM y NSP.
+    \item DistilBERT%: basado en \textit{Knowledge Distillation}; reducción del 40\% del tamaño, 60 \% en complejidad de computación, reteniendo el 97 \% de capacidades.
+    \item RoBERTa%: mejoras en aprendizaje \sout{(NSP)} y ajuste de hiperparámetros.
+    \item DeBERTa%: basado en \textit{Disentangled Attention}; \textit{word} y \textit{position embeddings} por separado; mejora de rendimiento en tareas que requieren razonamiento exhaustivo.
+\end{itemize}
+
+\end{frame}
